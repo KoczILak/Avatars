@@ -1,3 +1,4 @@
+# Imports
 import tkinter as tk
 import tkinter.ttk as ttk
 import requests
@@ -6,7 +7,7 @@ import urllib
 
 url = "https://any-anime.p.rapidapi.com/v1/anime/png/1"
 
-
+# Class
 class GuiApp:
     count = 0
     headers = {}
@@ -17,38 +18,52 @@ class GuiApp:
             "X-RapidAPI-Host": "any-anime.p.rapidapi.com"
         }
 
+        # Toplevel
         self.toplevel1 = tk.Tk() if master is None else tk.Toplevel(master)
         self.toplevel1.configure(height=278, width=226)
         self.toplevel1.resizable(False, False)
+
+        # Button
         self.gen_button = ttk.Button(self.toplevel1, name="gen_button")
         self.gen_button.configure(text='GENERATE', command=self.gen)
         self.gen_button.pack(anchor="n", fill="both", side="top")
+
+        # Canvas
         self.canvas1 = tk.Canvas(self.toplevel1)
         self.canvas1.configure(background="#747474", height=225, width=225)
         self.canvas1.pack(side="bottom")
+
+        # Second Button
         self.button2 = ttk.Button(self.toplevel1, name="button2")
         self.button2.configure(text='DOWNLOAD', command=self.download)
         self.button2.pack(anchor="n", fill="both", side="top")
+
+        # Toplevel packing
         self.toplevel1.pack_propagate(False)
 
         # Main widget
         self.mainwindow = self.toplevel1
 
+    # Generation def
     def gen(self):
         global response
         response = requests.get(url, headers=self.headers).json()['images'][0]
         print(response)
 
+        # Image URL
         image_url = response
         resp = requests.get(image_url)
 
+        # Format and data of image
         image_format = 'png'
         image_data = resp.content
 
+        # Adding image to canvas
         img = tk.PhotoImage(data=image_data, format=image_format)
         self.canvas1.create_image(0, 0, anchor=tk.NW, image=img)
         self.canvas1.image = img
 
+    # Downloading the image
     def download(self):
         res = requests.get(response)
 
@@ -59,6 +74,7 @@ class GuiApp:
 
     def run(self):
 
+        # Mainloop
         self.mainwindow.mainloop()
 
 if __name__ == "__main__":
