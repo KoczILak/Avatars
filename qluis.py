@@ -49,7 +49,6 @@ class GuiApp:
         self.canvas1.create_image(0, 0, anchor=tk.NW, image=img)
         self.canvas1.image = img
 
-
     def download(self):
         res = requests.get(response)
 
