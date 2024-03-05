@@ -56,9 +56,17 @@ class GuiApp:
         with open(f'avatar{self.count}.png', 'wb') as f:
             self.count = self.count + 1
             f.write(res.content)
+
+
+
+
+
+
+
     def run(self):
 
         self.mainwindow.mainloop()
+
 
 if __name__ == "__main__":
     app = GuiApp()
